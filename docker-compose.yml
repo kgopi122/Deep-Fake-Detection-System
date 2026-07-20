@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - veritrue-network
+    restart: unless-stopped
+
+  fastapi-service:
+    build:
+      context: ./python-detector
+      dockerfile: Dockerfile
+    container_name: fastapi-service
+    ports:
+      - "8001:8001"
+    networks:
+      - veritrue-network
+    restart: unless-stopped
+
+  springboot-backend:
+    build:
+      context: ./veritrue-backend
+      dockerfile: Dockerfile
+    container_name: springboot-backend
+    ports:
+      - "8000:8000"
+    environment:
+      # Override MongoDB URI to use internal Docker network
+      - spring.data.mongodb.uri=mongodb://mongodb:27017/Deep_Fake
+    depends_on:
+      - mongodb
+      - fastapi-service
+    networks:
+      - veritrue-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - springboot-backend
+    networks:
+      - veritrue-network
+    restart: unless-stopped
+
+networks:
+  veritrue-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
