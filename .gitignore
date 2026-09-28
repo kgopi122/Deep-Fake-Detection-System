@@ -1,0 +1,36 @@
+# Environment & Secret Files
+.env
+.env.local
+*.env
+!.env.example
+
+# Dependencies & Build Outputs
+node_modules/
+.venv/
+venv/
+
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+
+veritrue-backend/target/
+veritrue-backend/.mvn/
+veritrue-backend/*.jar
+
+python-detector/__pycache__/
+python-detector/venv/
+python-detector/.venv/
+python-detector/*.pyc
+*.pyc
+
+# IDE & System Files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Docker Data Volumes & Caches
+mongodb_data/
+hf_cache/

@@ -21,14 +21,16 @@ app.add_middleware(
 )
 
 # 1. Global Setup (Dual Engines)
+hf_token = os.getenv("HF_TOKEN") or None
+
 print("Loading Photo Model (Organika/sdxl-detector)...")
-photo_processor = AutoImageProcessor.from_pretrained("Organika/sdxl-detector")
-photo_model = AutoModelForImageClassification.from_pretrained("Organika/sdxl-detector")
+photo_processor = AutoImageProcessor.from_pretrained("Organika/sdxl-detector", token=hf_token)
+photo_model = AutoModelForImageClassification.from_pretrained("Organika/sdxl-detector", token=hf_token)
 photo_model.eval()
 
 print("Loading Art Model (umm-maybe/AI-image-detector)...")
-art_processor = AutoImageProcessor.from_pretrained("umm-maybe/AI-image-detector")
-art_model = AutoModelForImageClassification.from_pretrained("umm-maybe/AI-image-detector")
+art_processor = AutoImageProcessor.from_pretrained("umm-maybe/AI-image-detector", token=hf_token)
+art_model = AutoModelForImageClassification.from_pretrained("umm-maybe/AI-image-detector", token=hf_token)
 art_model.eval()
 
 
@@ -99,4 +101,5 @@ async def analyze_pixel(file: UploadFile = File(...)):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8001, reload=True)
+    port = int(os.getenv("FASTAPI_PORT", 8001))
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)

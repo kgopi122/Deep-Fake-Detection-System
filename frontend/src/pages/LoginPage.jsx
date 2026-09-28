@@ -30,7 +30,8 @@ export default function LoginPage() {
         ? { username: formData.username, password: formData.password }
         : formData;
 
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}${endpoint}`, payload);
+      const apiBase = import.meta.env.VITE_API_URL || '';
+      const response = await axios.post(`${apiBase}${endpoint}`, payload);
       
       if (isLogin) {
         // Securely save JWT

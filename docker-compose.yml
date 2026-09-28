@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   mongodb:
     image: mongo:latest
@@ -18,7 +16,12 @@ services:
       dockerfile: Dockerfile
     container_name: fastapi-service
     ports:
-      - "8001:8001"
+      - "${FASTAPI_PORT:-8001}:8001"
+    environment:
+      - HF_TOKEN=${HF_TOKEN:-}
+    volumes:
+      # Persists downloaded Hugging Face weights on disk across restarts
+      - hf_cache:/root/.cache/huggingface
     networks:
       - veritrue-network
     restart: unless-stopped
@@ -29,10 +32,11 @@ services:
       dockerfile: Dockerfile
     container_name: springboot-backend
     ports:
-      - "8000:8000"
+      - "${SPRING_PORT:-8000}:8000"
     environment:
-      # Override MongoDB URI to use internal Docker network
-      - spring.data.mongodb.uri=mongodb://mongodb:27017/Deep_Fake
+      # Inject Docker network URLs matching application.properties variables
+      - MONGO_URI=${MONGO_URI:-mongodb://mongodb:27017/Deep_Fake}
+      - FASTAPI_URL=${FASTAPI_URL:-http://fastapi-service:8001}
     depends_on:
       - mongodb
       - fastapi-service
@@ -46,7 +50,7 @@ services:
       dockerfile: Dockerfile
     container_name: frontend
     ports:
-      - "80:80"
+      - "${FRONTEND_PORT:-3000}:80"
     depends_on:
       - springboot-backend
     networks:
@@ -59,3 +63,4 @@ networks:
 
 volumes:
   mongodb_data:
+  hf_cache:
