@@ -1,26 +1,35 @@
 # Environment & Secret Files
 .env
 .env.local
+.env.properties
 *.env
+*.env.properties
 !.env.example
+!**/.env.example
 
 # Dependencies & Build Outputs
 node_modules/
+**/node_modules/
 .venv/
 venv/
+**/venv/
+**/.venv/
+target/
+**/target/
+build/
+**/build/
+dist/
+**/dist/
 
-frontend/node_modules/
-frontend/dist/
-frontend/build/
+# Java Build Files & Executables
+*.jar
+*.war
+!**/mvnw
+!**/wrapper/maven-wrapper.jar
 
-veritrue-backend/target/
-veritrue-backend/.mvn/
-veritrue-backend/*.jar
-
-python-detector/__pycache__/
-python-detector/venv/
-python-detector/.venv/
-python-detector/*.pyc
+# Python Compiled & Cache Files
+__pycache__/
+**/__pycache__/
 *.pyc
 
 # IDE & System Files
@@ -31,6 +40,6 @@ python-detector/*.pyc
 .DS_Store
 Thumbs.db
 
-# Docker Data Volumes & Caches
+# Data Volumes & Caches
 mongodb_data/
 hf_cache/

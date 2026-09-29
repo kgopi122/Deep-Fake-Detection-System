@@ -7,7 +7,7 @@ import {
 import LoginPage from './pages/LoginPage';
 
 // --- API CONFIGURATION ---
-const API_BASE_URL = `${import.meta.env.VITE_API_URL || ''}/api/v1/analysis`;
+const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/analysis`;
 
 // --- API Service ---
 const apiService = {

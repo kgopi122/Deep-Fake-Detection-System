@@ -10,7 +10,7 @@ public class VeriTrueBackendApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(VeriTrueBackendApplication.class, args);
-        System.out.println("✅ VeriTrue Forensic Engine is Online on Port 8000");
+        System.out.println("✅ VeriTrue Forensic Engine is Online");
     }
 
 }
