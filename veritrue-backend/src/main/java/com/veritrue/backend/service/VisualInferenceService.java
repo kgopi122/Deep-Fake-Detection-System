@@ -8,9 +8,6 @@ import java.util.Map;
 @Service
 public class VisualInferenceService {
 
-    // private final RestTemplate restTemplate = new RestTemplate();
-    // private static final String TF_SERVING_URL =
-    // "http://localhost:8501/v1/models/xception:predict";
 
     private final ForensicEngine forensicEngine;
 

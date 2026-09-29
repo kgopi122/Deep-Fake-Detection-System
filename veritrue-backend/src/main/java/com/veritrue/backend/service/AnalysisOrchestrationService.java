@@ -26,8 +26,8 @@ public class AnalysisOrchestrationService {
 
     private final RestTemplate restTemplate;
     
-    @Value("${fastapi.service.url}/api/analyze/pixel")
-    private String pythonMicroserviceUrl;
+    @Value("${fastapi.service.url}")
+    private String fastapiServiceUrl;
 
 
     public AnalysisOrchestrationService() {
@@ -57,8 +57,13 @@ public class AnalysisOrchestrationService {
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
+        String baseUrl = (fastapiServiceUrl != null && fastapiServiceUrl.endsWith("/"))
+                ? fastapiServiceUrl.substring(0, fastapiServiceUrl.length() - 1)
+                : fastapiServiceUrl;
+        String targetUrl = baseUrl + "/api/analyze/pixel";
+
         ResponseEntity<PythonAnalysisResponse> responseEntity = restTemplate.postForEntity(
-                pythonMicroserviceUrl, requestEntity, PythonAnalysisResponse.class);
+                targetUrl, requestEntity, PythonAnalysisResponse.class);
 
         PythonAnalysisResponse pyResponse = responseEntity.getBody();
 
