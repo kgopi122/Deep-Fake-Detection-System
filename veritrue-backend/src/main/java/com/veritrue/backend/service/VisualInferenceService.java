@@ -90,8 +90,8 @@ public class VisualInferenceService {
             } else {
                 log.warn("ONNX model file not found at {}. VisualInferenceService will use heuristic forensics fallback.", modelPath);
             }
-        } catch (Exception e) {
-            log.error("Failed to initialize ONNX session from {}: {}. Falling back to heuristic forensics.", modelPath, e.getMessage(), e);
+        } catch (Throwable t) {
+            log.warn("Failed to initialize ONNX session from {}: {}. Falling back to heuristic forensics.", modelPath, t.getMessage(), t);
             initialized = false;
         }
     }
