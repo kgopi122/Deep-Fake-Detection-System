@@ -400,8 +400,8 @@ const ResultsPanel = ({ data, onReset, previewUrl }) => {
                   </div>
                 </div>
                 <div className={`relative aspect-video bg-black flex items-center justify-center overflow-hidden border-t border-white/5`}>
-                  {/* Grid Overlay */}
-                  <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none"></div>
+                  {/* Grid / Noise Overlay */}
+                  <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20viewBox=%220%200%20200%20200%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter%20id=%22noiseFilter%22%3E%3CfeTurbulence%20type=%22fractalNoise%22%20baseFrequency=%220.8%22%20numOctaves=%223%22%20stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect%20width=%22100%25%22%20height=%22100%25%22%20filter=%22url(%23noiseFilter)%22%20opacity=%220.15%22/%3E%3C/svg%3E')] opacity-20 pointer-events-none"></div>
 
                   {previewUrl && (
                     <img
